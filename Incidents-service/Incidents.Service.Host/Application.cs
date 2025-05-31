@@ -1,8 +1,10 @@
 ﻿using Incidents.Service.Host.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace Incidents.Service.Host;
 
@@ -11,16 +13,7 @@ namespace Incidents.Service.Host;
 /// </summary>    
 public static class Application
 {
-    private const string applicationName = "incidents-service";
-    private static Action<WebApplicationBuilder>? _customConfigHook;
-
-    /// <summary>    
-    /// Test usage method to inject configuration for the application.    
-    /// </summary>    
-    public static void UseCustomConfiguration(Action<WebApplicationBuilder> configHook)
-    {
-        _customConfigHook = configHook;
-    }
+    private const string applicationName = "Incidents Service";
 
     /// <summary>    
     /// This is the OpenAPI information for the service.    
@@ -46,6 +39,16 @@ public static class Application
     public static WebApplication BuildApp(WebApplicationBuilder builder)
     {
         BaseDependency.RegisterDependencies(builder.Services);
+
+        // Configure Kestrel to use HTTPS on port 8082
+        builder.WebHost.ConfigureKestrel(options =>
+        {
+            options.ListenLocalhost(8082, listenOptions =>
+            {
+                listenOptions.UseHttps(); // Ensure HTTPS
+            });
+        });
+
         builder.Services.AddLogging();
         builder.Services.AddCors(options =>
         {
@@ -57,45 +60,36 @@ public static class Application
             });
         });
 
-        builder.Services.AddSwaggerGen(o =>
-        {
-            o.SwaggerDoc(ApiInfo?.Version, ApiInfo);
-            o.EnableAnnotations();
-        }); // Ensure Swagger services are added    
-
+        // Add services to the container
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc(ApiInfo?.Version, ApiInfo);
+        });
+
         var app = builder.Build();
 
-        // Configure HTTP request pipeline    
+        // Configure middleware
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-
-            // Enable Swagger middleware
-            app.UseSwagger();
-
-            // Configure Swagger UI
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", $"{ApiInfo?.Title} - {ApiInfo?.Version}");
-                options.RoutePrefix = string.Empty; // Serve Swagger UI at the app's root (e.g., https://localhost:8082)
-                options.DocumentTitle = ApiInfo?.Title;
-                options.DisplayRequestDuration();
-            });
         }
+
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Incident API v1");
+            c.RoutePrefix = string.Empty; // Makes Swagger available at https://localhost:8082/
+        });
 
         app.UseHttpsRedirection();
         app.UseCors();
+        // TODO: Add authentication if needed.    
+        //app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseRouting();
-
-        // TODO: Add authentication and authorization if needed.    
-        //app.UseAuthentication();    
-        //app.UseAuthorization();
-
-        app.Urls.Clear();
-        app.Urls.Add("https://localhost:8082");
-
         app.UseEndpoints(endpoints => { _ = endpoints.MapControllers(); });
 
         return app;

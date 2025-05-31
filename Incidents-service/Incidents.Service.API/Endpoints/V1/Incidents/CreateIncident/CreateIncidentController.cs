@@ -21,7 +21,7 @@ public class CreateIncidentController(ICommandRunner commandRunner, ILogger<GetA
     [SwaggerResponse(403, "Forbidden. AttachmentId is unknown or inactive, or caller does not have permissions.")]
     [SwaggerResponse(404, "AttachmentId not found.")]
     [SwaggerResponse(429, "Too many requests.")]
-    public async Task<ActionResult> GetAsync([FromBody] CreateIncidentCommand createIncidentCommand, CancellationToken cancellationToken)
+    public async Task<ActionResult> CreateAsync([FromBody] CreateIncidentCommand createIncidentCommand, CancellationToken cancellationToken)
     {
         try
         {

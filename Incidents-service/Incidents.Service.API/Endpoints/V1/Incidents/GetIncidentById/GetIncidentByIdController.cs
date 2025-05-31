@@ -21,7 +21,7 @@ public class GetIncidentByIdController(IQueryRunner queryRunner, ILogger<GetInci
     [SwaggerResponse(403, "Forbidden. AttachmentId is unknown or inactive, or caller does not have permissions.")]
     [SwaggerResponse(404, "AttachmentId not found.")]
     [SwaggerResponse(429, "Too many requests.")]
-    public async Task<ActionResult> GetAsync(GetIncidentByIdQuery getInvoiceQuery, CancellationToken cancellationToken)
+    public async Task<ActionResult> GetAsync([FromRoute] GetIncidentByIdQuery getInvoiceQuery, CancellationToken cancellationToken)
     {
         try
         {

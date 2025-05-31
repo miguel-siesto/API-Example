@@ -1,7 +1,8 @@
 {
   "profiles": {
-    "Incidents.Service.Host": {
+    "Incidents Service": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
       "applicationUrl": "https://localhost:8082",
       "environmentVariables": {

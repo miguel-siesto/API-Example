@@ -5,6 +5,7 @@ using Incidents.Service.Logic.Commands.CreateIncident;
 using Incidents.Service.Logic.Queries.GetAllIncidents;
 using Incidents.Service.Logic.Queries.GetIncidentById;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Incidents.Service.Host.DependencyInjection;
