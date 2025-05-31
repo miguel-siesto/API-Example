@@ -11,5 +11,5 @@ public interface IIncidentRepository
     IncidentDto? GetIncident(Guid id);
 
     /// <summary>Add an incident to the repository.</summary>
-    void AddIncident(IncidentDto incident);
+    void AddOrUpdateIncident(IncidentDto incident);
 }

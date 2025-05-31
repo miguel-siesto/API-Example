@@ -12,7 +12,7 @@ public class CreateIncidentCommandHandler(IIncidentRepository incidentRepository
 
     public Task ExecuteAsync(CreateIncidentCommand command, CancellationToken cancellationToken)
     {
-        incidentRepository.AddIncident(command.ToIncidentDto());
+        incidentRepository.AddOrUpdateIncident(command.ToIncidentDto());
 
         return Task.CompletedTask;
     }

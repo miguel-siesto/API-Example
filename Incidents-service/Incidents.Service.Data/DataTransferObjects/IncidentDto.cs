@@ -1,11 +1,11 @@
-﻿namespace Incidents.Service.Data.DataTransferObjects;
+﻿using Incidents.Service.Core.Enums;
 
-using Incidents.Service.Core.Enums;
+namespace Incidents.Service.Data.DataTransferObjects;
 
-public class IncidentDto(Guid incidentId, DateTime incidentTimestamp, IncidentSeverity incidentSeverity = IncidentSeverity.Minor, string? incidentDescription = null)
+public class IncidentDto(Guid incidentId, DateTime timestamp, IncidentSeverity severity = IncidentSeverity.Minor, string? description = null)
 {
     public readonly Guid IncidentId = incidentId;
-    public readonly DateTime IncidentTimestamp = incidentTimestamp;
-    public readonly IncidentSeverity IncidentSeverity = incidentSeverity;
-    public readonly string? IncidentDescription = incidentDescription;
+    public readonly DateTime Timestamp = timestamp;
+    public readonly IncidentSeverity Severity = severity;
+    public readonly string? Description = description;
 }
