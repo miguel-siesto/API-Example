@@ -10,11 +10,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Incidents.Service.API\Incidents.Service.API.csproj" />
+		<Folder Include="Properties\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Properties\" />
+	  <ProjectReference Include="..\Incidents.Service.API\Incidents.Service.API.csproj" />
+	  <ProjectReference Include="..\Incidents.Service.Core\Incidents.Service.Core.csproj" />
+	  <ProjectReference Include="..\Incidents.Service.Data\Incidents.Service.Data.csproj" />
+	  <ProjectReference Include="..\Incidents.Service.Logic\Incidents.Service.Logic.csproj" />
 	</ItemGroup>
 
 </Project>

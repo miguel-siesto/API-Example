@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\Incidents.Service.Core\Incidents.Service.Core.csproj" />
-	  <ProjectReference Include="..\Incidents.Service.Logic\Incidents.Service.Logic.csproj" />
+    <ProjectReference Include="..\Incidents.Service.Core\Incidents.Service.Core.csproj" />
+    <ProjectReference Include="..\Incidents.Service.Logic\Incidents.Service.Logic.csproj" />
   </ItemGroup>
 
 </Project>
