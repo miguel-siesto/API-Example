@@ -40,15 +40,6 @@ public static class Application
     {
         BaseDependency.RegisterDependencies(builder.Services);
 
-        // Configure Kestrel to use HTTPS on port 8082
-        builder.WebHost.ConfigureKestrel(options =>
-        {
-            options.ListenLocalhost(8082, listenOptions =>
-            {
-                listenOptions.UseHttps(); // Ensure HTTPS
-            });
-        });
-
         builder.Services.AddLogging();
         builder.Services.AddCors(options =>
         {
@@ -70,7 +61,6 @@ public static class Application
 
         var app = builder.Build();
 
-        // Configure middleware
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();

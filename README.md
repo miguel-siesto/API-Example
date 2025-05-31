@@ -30,12 +30,13 @@ This separation promotes clearer code organization and can facilitate future sca
 
 ```bash
 dotnet build
-dotnet run
+dotnet run --project .\Incidents.Service.Host
 ```
 
 3. **Testing:**
    - Postman: Create a new collection pointing to https://localhost:8082 and create new endpoints to tests the API endpoints while the service is running.
    - Swagger: Test the methods straight away from the swagger landing page.
+   - NUnit: Run the unit tests using the test explorer in your IDE or via command line: ```bash dotnet test Incidents-service.sln```
 
 4. **Improvements:**
    - I would complete the integration tests to make sure the whole execution of each endpoint covers all the expected error codes (happy and unhappy paths).
