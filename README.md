@@ -33,6 +33,8 @@ dotnet build
 dotnet run --project .\Incidents.Service.Host
 ```
 
+_**Note**: It should automatically raise a new Chrome instance with the Swagger landing page. If not, the service should be running at [localhost](https://localhost:8082)_
+
 3. **Testing:**
    - Postman: Create a new collection pointing to https://localhost:8082 and create new endpoints to tests the API endpoints while the service is running.
    - Swagger: Test the methods straight away from the swagger landing page.
