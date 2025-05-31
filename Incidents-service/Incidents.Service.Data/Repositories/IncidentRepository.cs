@@ -1,14 +1,17 @@
 ﻿namespace Incidents.Service.Data.Repositories;
 
 using Incidents.Service.Data.DataTransferObjects;
+using System.Collections.Concurrent;
 
 public class IncidentRepository : IIncidentRepository
 {
-    private readonly Dictionary<Guid, IncidentDto> incidents = [];
+    private readonly ConcurrentDictionary<Guid, IncidentDto> _lockIncidents = [];
 
-    public void AddOrUpdateIncident(IncidentDto incident) => incidents[incident.IncidentId] = incident;
+    protected IReadOnlyDictionary<Guid, IncidentDto> IncidentsCache => _lockIncidents;
 
-    public IncidentDto? GetIncident(Guid id) => incidents.FirstOrDefault(kvp => kvp.Key == id).Value;
+    public void AddOrUpdateIncident(IncidentDto incident) => _lockIncidents[incident.IncidentId] = incident;
 
-    public IEnumerable<IncidentDto> GetIncidents() => incidents.Values;
+    public IncidentDto? GetIncident(Guid id) => IncidentsCache.FirstOrDefault(kvp => kvp.Key == id).Value;
+
+    public IEnumerable<IncidentDto> GetIncidents() => IncidentsCache.Values;
 }
