@@ -1,7 +1,7 @@
-﻿namespace Incidents.Service.Data.Repositories;
-
-using Incidents.Service.Data.DataTransferObjects;
+﻿using Incidents.Service.Data.DataTransferObjects;
 using System.Collections.Concurrent;
+
+namespace Incidents.Service.Data.Repositories;
 
 public class IncidentRepository : IIncidentRepository
 {
