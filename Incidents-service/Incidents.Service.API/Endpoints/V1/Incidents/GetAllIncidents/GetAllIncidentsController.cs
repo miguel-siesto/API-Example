@@ -21,7 +21,7 @@ public class GetAllIncidentsController(IQueryRunner queryRunner, ILogger<GetAllI
     [SwaggerResponse(403, "Forbidden. AttachmentId is unknown or inactive, or caller does not have permissions.")]
     [SwaggerResponse(404, "AttachmentId not found.")]
     [SwaggerResponse(429, "Too many requests.")]
-    public async Task<ActionResult> GetAsync(GetAllIncidentsQuery getInvoiceQuery, CancellationToken cancellationToken)
+    public async Task<ActionResult> GetAsync([FromQuery] GetAllIncidentsQuery getIncidentQuery, CancellationToken cancellationToken)
     {
         try
         {
@@ -30,7 +30,7 @@ public class GetAllIncidentsController(IQueryRunner queryRunner, ILogger<GetAllI
                 return BadRequest(ModelState);
             }
 
-            var queryResponse = await queryRunner.RunAsync<GetAllIncidentsQuery, IEnumerable<IncidentDto>>(getInvoiceQuery, cancellationToken);
+            var queryResponse = await queryRunner.RunAsync<GetAllIncidentsQuery, IEnumerable<IncidentDto>>(getIncidentQuery, cancellationToken);
             return Ok(queryResponse);
         }
         catch (HttpRequestException ex)

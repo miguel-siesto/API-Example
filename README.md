@@ -43,3 +43,4 @@ dotnet run --project .\Incidents.Service.Host
    - Creating a Database to properly store and manage Incidents would be ideal, then working with a Cache if it's highly demanded.
    - Add CodeQL file to validate build and testing within the service when creating PRs and branches.
    - Create a pipeline mechanism to deploy the service (Azure pipeline yaml and/or AWS CloudFormation stacks or deploying through Jenkins/TeamCity).
+   - Extend GetAllIncidents to support pagination and filtering through query parameters in the URL.

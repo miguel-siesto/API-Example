@@ -1,10 +1,10 @@
 ﻿using Incidents.Service.Core.Queries;
+using Incidents.Service.Data.DataTransferObjects;
 using Incidents.Service.Logic.Queries.GetIncidentById;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
-using System.Text.Json;
 
 namespace Incidents.Service.API.Endpoints.V1.Incidents.GetIncidentById;
 
@@ -21,7 +21,7 @@ public class GetIncidentByIdController(IQueryRunner queryRunner, ILogger<GetInci
     [SwaggerResponse(403, "Forbidden. AttachmentId is unknown or inactive, or caller does not have permissions.")]
     [SwaggerResponse(404, "AttachmentId not found.")]
     [SwaggerResponse(429, "Too many requests.")]
-    public async Task<ActionResult> GetAsync([FromRoute] GetIncidentByIdQuery getInvoiceQuery, CancellationToken cancellationToken)
+    public async Task<ActionResult> GetAsync(GetIncidentByIdQuery getInvoiceQuery, CancellationToken cancellationToken)
     {
         try
         {
@@ -30,7 +30,7 @@ public class GetIncidentByIdController(IQueryRunner queryRunner, ILogger<GetInci
                 return BadRequest(ModelState);
             }
 
-            var queryResponse = await queryRunner.RunAsync<GetIncidentByIdQuery, JsonDocument>(getInvoiceQuery, cancellationToken);
+            var queryResponse = await queryRunner.RunAsync<GetIncidentByIdQuery, IncidentDto>(getInvoiceQuery, cancellationToken);
             return Ok(queryResponse);
         }
         catch (HttpRequestException ex)
